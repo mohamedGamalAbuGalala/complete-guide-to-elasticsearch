@@ -1,0 +1,248 @@
+GET product/_doc/_search
+{
+  "query":{
+    "term":{
+      "is_active": true
+    }
+  }
+}
+
+
+GET product/_doc/_search
+{
+  "query":{
+    "term":{
+      "is_active": {
+        "value": true
+      }
+    }
+  }
+}
+
+GET product/_doc/_search
+{
+  "query":{
+    "terms": {
+      "tags.keyword": ["Soup","Cake"]
+    }
+  }
+}
+
+
+GET product/_doc/_search
+{
+  "query":{
+    "ids":{
+      "values": [1,2,3]
+    }
+  }
+}
+
+
+
+GET product/_doc/_search
+{
+  "query":{
+    "range":{
+      "in_stock": {
+        "gte":1,
+        "lte":5
+      }
+    }
+  }
+}
+
+
+GET product/_doc/_search
+{
+  "query":{
+    "range":{
+      "created": {
+        "gte":"01-01-2010",
+        "lte":"31-12-2010",
+        "format": "dd-MM-yyyy"
+      }
+    }
+  }
+}
+
+
+GET product/_doc/_search
+{
+  "query":{
+    "range":{
+      "created": {
+        "gte":"2010/01/01||/d-1y/M"
+      }
+    }
+  }
+}
+
+
+GET product/_doc/_search
+{
+  "query":{
+    "range":{
+      "created": {
+        "gte":"now/M-1y"
+      }
+    }
+  }
+}
+
+GET product/_doc/_search
+{
+  "query":{
+    "exists":{
+      "field": "tags"
+    }
+  }
+}
+
+
+
+GET product/_doc/_search
+{
+  "query":{
+    "prefix":{
+      "tags.keyword": "Vege"
+    }
+  }
+}
+
+
+GET product/_doc/_search
+{
+  "query":{
+    "wildcard":{
+      "tags.keyword": "Veg*l?"
+    }
+  }
+}
+
+
+GET product/_doc/_search
+{
+  "query":{
+    "regexp":{
+      "tags.keyword": "Veg[a-zA-Z]+le"
+    }
+  }
+}
+
+
+
+# excercises
+
+GET product/_doc/_search
+{
+  "query":{
+    "range":{
+      "sold": {
+        "lt":10
+      }
+    }
+  }
+}
+
+GET product/_doc/_search
+{
+  "query":{
+    "range":{
+      "sold": {
+        "lt":30,
+        "gte":10
+      }
+    }
+  }
+}
+
+GET product/_doc/_search
+{
+  "query":{
+    "term":{
+      "tags.keyword": "Meat"
+    }
+  }
+}
+
+
+GET product/_doc/_search
+{
+  "query":{
+    "terms": {
+        "name.keyword": ["Tomato", "Paste"]
+    }
+  }
+}
+
+GET product/_doc/_search
+{
+  "query":{
+    "bool": {
+        "should": [
+            {"term": {"name": {"value": "Tomato"}}},
+            {"term": {"name": {"value": "Paste"}}}
+        ]
+    }
+  }
+}
+
+GET product/_doc/_search
+{
+  "query":{
+    "wildcard":{
+      "name": "past*"
+    }
+  }
+}
+
+GET product/_doc/_search
+{
+  "query":{
+    "wildcard":{
+      "name": "past?"
+    }
+  }
+}
+
+
+GET product/_doc/_search
+{
+  "query":{
+    "regexp":{
+      "name": "[0-9]+"
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

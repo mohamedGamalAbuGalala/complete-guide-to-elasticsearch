@@ -1,0 +1,109 @@
+GET recipe/_doc/_search
+{
+  "query":{
+    "bool": {
+      "must": [
+        {
+          "match": {
+            "ingredients.name" :"parmesan"
+          }
+        }
+        ],
+        "must_not": [
+        {
+          "match": {
+            "ingredients.name" :"tuna"
+          }
+        }
+        ],
+        "should": [
+        {
+          "match": {
+            "ingredients.name" :"parsley"
+          }
+        }
+        ],
+        "filter": [
+          {
+          "range": {
+            "preparation_time_minutes":{
+              "lte" :15
+            }
+          }
+        }
+        ]
+    }
+  }
+}
+
+
+GET recipe/_doc/_search
+{
+  "query":{
+    "bool": {
+      "must": [
+          {
+            "match": {
+              "ingredients.name" :"pasta"
+            }
+          }
+        ],
+        "should": [
+          {
+            "match": {
+              "ingredients.name" :"parmesan"
+            }
+          }
+        ]
+    }
+  }
+}
+
+GET recipe/_doc/_search
+{
+  "query":{
+    "bool": {
+      "must": [
+          {
+            "match": {
+              "ingredients.name" :{
+                "query": "parmesan",
+                "_name": "parmesan_must"
+              }
+            }
+          }
+        ],
+        "must_not": [
+          {
+            "match": {
+              "ingredients.name" : {
+                "query": "tuna",
+                "_name": "tuna_must_not"
+              }
+            }
+          }
+        ],
+        "should": [
+          {
+            "match": {
+              "ingredients.name" : {
+                "query": "parsley",
+                "_name": "parsley_should"
+              }
+            }
+          }
+        ],
+        "filter": [
+          {
+            "range": {
+              "preparation_time_minutes":{
+                "lte" :15,
+                "_name": "prep_time_filter"
+              }
+            }
+          }
+        ]
+    }
+  }
+}
+

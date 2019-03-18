@@ -1,0 +1,65 @@
+GET product/_doc/_search?q=name:lobster
+
+GET product/_doc/_search?q=tags:Meat AND name:Tuna
+
+
+GET product/_doc/_search
+{
+  "query":{
+    "match_all":{}
+  }
+}
+
+
+GET product/_doc/_search
+{
+  "explain": true,
+  "query":{
+    "term":{
+    "name":"lobster"
+    }
+  }
+}
+
+
+GET product/_doc/1/_explain
+{
+  "query":{
+    "term":{
+  "name":"lobster"
+    }
+  }
+}
+
+
+
+GET product/_doc/_search
+{
+  "query":{
+    "term":{
+    "name":"lobster"
+    }
+  }
+}
+
+
+
+GET product/_doc/_search
+{
+  "query":{
+    "term":{
+    "name":"Lobster"
+    }
+  }
+}
+
+
+
+GET product/_doc/_search
+{
+  "query":{
+    "match":{
+    "name":"Lobster"
+    }
+  }
+}

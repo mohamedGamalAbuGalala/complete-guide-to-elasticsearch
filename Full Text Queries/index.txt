@@ -1,0 +1,73 @@
+GET recipe/_doc/_search
+{
+  "query":{
+    "match":{
+      "title": "Recipes with pasta or spaghetti"
+    }
+  }
+}
+
+GET recipe/_doc/_search
+{
+  "query":{
+    "match":{
+      "title":{
+      "query": "Recipes with pasta or spaghetti",
+      "operator":"and"
+      }
+    }
+  }
+}
+
+GET recipe/_doc/_search
+{
+  "query":{
+    "match_phrase":{
+      "title": "Spaghetti Puttanesca"
+    }
+  }
+}
+
+GET recipe/_doc/_search
+{
+  "query":{
+    "multi_match":{
+      "query":"pasta",
+      "fields":["title","description"]
+    }
+  }
+}
+
+
+
+# excercises
+
+GET recipe/_doc/_search
+{
+  "query":{
+    "match":{
+      "title": "pasta with parmesan and spinach"
+    }
+  }
+}
+
+
+GET recipe/_doc/_search
+{
+  "query":{
+    "match_phrase":{
+      "title": "pasta carbonara"
+    }
+  }
+}
+
+GET recipe/_doc/_search
+{
+  "query":{
+    "multi_match":{
+      "query":"pasta pesto",
+      "fields":["title","description"]
+    }
+  }
+}
+

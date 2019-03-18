@@ -1,0 +1,189 @@
+POST /product/_doc
+{
+  "name":"processing events with logStash",
+  "instructor":{
+   "firstName":"Mohamed",
+   "lastName":"Gamal"
+  }
+}
+
+PUT /product/_doc/1
+{
+  "name":"Adding with custom _id",
+  "instructor":{
+   "firstName":"Mohamed",
+   "lastName":"Gamal"
+  }
+}
+
+
+GET /product/_doc/1
+
+PUT /product/_doc/1
+{
+  "name":"Adding with custom _id",
+  "instructor":{
+   "firstName":"Mohamed",
+   "lastName":"Gamal"
+  },
+  "price": 195
+}
+
+POST /product/_doc/1/_update
+{
+  "doc":{
+   "price": 95,
+   "tags":["ElasticSearch"]
+  }
+}
+
+
+
+POST /product/_doc/1/_update
+{
+  "script": "ctx._source.price += 100"
+}
+
+
+GET /product/_doc/1
+
+DELETE /product/_doc/1
+
+POST /product/_doc/1/_update
+{
+  "script": "ctx._source.price += 100",
+  "upsert": {
+    "price": 100
+  }
+}
+
+
+DELETE /product/_doc/1
+
+POST /product/_doc
+{
+  "name":"processing events with logStash",
+  "instructor":{
+   "firstName":"Mohamed",
+   "lastName":"Gamal"
+  },
+  "category":"bla"
+}
+
+POST /product/_doc
+{
+  "name":"processing events with logStash",
+  "instructor":{
+   "firstName":"Mohamed",
+   "lastName":"Gamal"
+  },
+  "category":"foo"
+}
+
+POST /product/_doc
+{
+  "name":"processing events with logStash",
+  "instructor":{
+   "firstName":"Mohamed",
+   "lastName":"Gamal"
+  },
+  "category":"bla"
+}
+
+GET _search
+{
+  "query": {
+    "match_all": {}
+  }
+}
+
+GET /product/_search
+{
+  "query": {
+    "match": {
+      "category": "foo"
+    }
+  }
+}
+
+POST product/_delete_by_query
+{
+  "query":{
+    "match": {
+      "category": "bla"
+    }
+  }
+}
+
+
+DELETE product
+
+POST product/_bulk
+{ "index": { "_id" : "100", "_type" : "_doc"} }
+{ "price": 100 }
+{ "index": { "_id" : "101", "_type" : "_doc"} }
+{ "price": 101 }
+
+POST product/_bulk
+{ "update": { "_id" : "100", "_type" : "_doc" } }
+{ "doc": {"price": 1000 } }
+{ "delete": { "_id" : "101", "_type" : "_doc" } }
+
+GET product/_doc/101
+
+POST /product/_doc/_bulk?pretty
+-binary @test-data.json
+
+
+GET _cat/health?v
+
+GET _cat/nodes?v
+
+GET _cat/indices?v
+
+GET _cat/allocation?v
+
+
+GET _cat/shards?v
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

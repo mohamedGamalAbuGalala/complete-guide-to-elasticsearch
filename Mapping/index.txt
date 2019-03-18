@@ -1,0 +1,134 @@
+GET product/_mapping
+
+PUT product/_doc/_mapping
+{
+  "properties": {
+    "discount":{
+      "type": "double"
+    }
+  }
+}
+
+DELETE product
+
+PUT product/
+{
+  "mappings": {
+    "_doc":{
+      "dynamic": false,
+      "properties":{
+        "in_stock":{
+          "type": "integer"
+        },
+        "is_active":{
+          "type": "boolean"
+        },
+        "price":{
+          "type": "integer"
+        },
+        "sold":{
+          "type": "long"
+        }
+      }
+    }
+  }
+}
+
+
+
+PUT product/_doc/_mapping
+{
+  "properties":{
+    "description":{
+      "type": "text"
+    },
+    "name":{
+      "type": "text",
+      "fields":{
+        "keyword":{
+          "type":"keyword"
+        }
+      }
+    },
+    "tags":{
+      "type": "text",
+      "fields":{
+        "keyword":{
+          "type":"keyword"
+        }
+      }
+    }
+  }
+}
+
+GET product/_doc/_mapping
+
+
+PUT product/_doc/_mapping
+{
+  "properties":{
+    "created":{
+      "type": "date",
+      "format":"yyyy/MM/dd HH:mm:ss||yyyy/MM/dd"
+    }
+  }
+}
+
+POST product/_doc/2000
+{
+  "description":"test",
+  "discount": 20
+}
+
+
+PUT product/_doc/_mapping
+{
+  "properties":{
+    "discount":{
+      "type":"integer"
+    }
+  }
+}
+
+GET product/_doc/_search
+{
+  "query": {
+    "match":{
+      "description": "test bla"
+    }
+  }
+}
+
+GET product/_doc/_search
+{
+  "query": {
+    "term":{
+      "discount": 20
+    }
+  }
+}
+
+
+POST product/_doc/2000
+{
+  "description":"test bla",
+  "discount": 20
+}
+
+PUT product/_doc/_mapping
+{
+  "properties":{
+    "discount":{
+      "type": "integer"
+    }
+  }
+}
+
+POST product/_update_by_query?conflicts=proceed
+
+DELETE product/_doc/2000
+
+
+
+
+

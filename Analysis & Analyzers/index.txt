@@ -1,0 +1,215 @@
+POST _analyze
+{
+  "tokenizer": "standard",
+  "text": "I'm in the mood for drinking semi-dry red wine!"
+}
+
+POST _analyze
+{
+  "tokenizer": "standard",
+  "filter": ["lowercase"], 
+  "text": "I'm in the mood for drinking semi-dry red wine!"
+}
+
+
+POST _analyze
+{
+  "analyzer": "standard", 
+  "text": "I'm in the mood for drinking semi-dry red wine!"
+}
+
+
+PUT existing_analyzer_config
+{
+  "settings": {
+    "analysis": {
+      "analyzer": {
+        "english_stop":{
+          "type":"standard",
+          "stopwards":"_english_"
+        }
+      },
+      "filter": {
+        "my_stemmer":{
+          "type": "stemmer",
+          "name":"english"
+        }
+      }
+    }
+  }
+}
+
+
+
+POST existing_analyzer_config/_analyze
+{
+  "analyzer": "english_stop",
+  "text": "I'm in the mood for drinking semi-dry red wine!"
+}
+
+POST existing_analyzer_config/_analyze
+{
+  "tokenizer": "standard",
+  "filter": ["my_stemmer"], 
+  "text": "I'm in the mood for drinking semi-dry red wine!"
+}
+
+
+
+
+PUT analyzer_test
+{
+  "settings": {
+    "analysis": {
+      "analyzer": {
+        "english_stop":{
+          "type":"standard",
+          "stopwards":"_english_"
+        },
+        "my_analyzer":{
+          "type":"custom",
+          "tokenizer":"standard",
+          "char_filter":["html_strip"],
+          "filter":["standard","lowercase","trim","my_stemmer"]
+        }
+      },
+      "filter": {
+        "my_stemmer":{
+          "type": "stemmer",
+          "name":"english"
+        }
+      }
+    }
+  }
+}
+
+
+POST analyzer_test/_analyze
+{
+  "analyzer": "my_analyzer",
+  "text": "I'm in the mood for drinking <strong>semi-dry</strong> red wine!"
+}
+
+PUT analyzer_test/_doc/_mapping
+{
+  "properties":{
+    "description":{
+      "type":"text",
+      "analyzer": "my_analyzer"
+    },
+    "teaser":{
+      "type":"text",
+      "analyzer": "standard"
+    }
+  }
+}
+
+POST analyzer_test/_doc/1
+{
+  "description": "drinking",
+  "teaser": "drinking"
+}
+
+GET  analyzer_test/_doc/_search
+{
+  "query": {
+    "term": {
+      "teaser": "drinking"
+    }
+  }
+}
+
+
+GET  analyzer_test/_doc/_search
+{
+  "query": {
+    "term": {
+      "description": {
+       "value": "drink"
+      }
+    }
+  }
+}
+
+# to add analyzers to existing indecies
+
+POST analyzer_test/_close
+
+PUT analyzer_test/_settings
+{
+  "analysis": {
+    "analyzer": {
+      "french_stop":{
+        "type":"standard",
+        "stopwords":"_french_"
+      }
+    }
+  }
+}
+
+POST analyzer_test/_open
+
+DELETE arabic_example
+
+PUT arabic_example
+{
+  "settings": {
+    "analysis": {
+      "analyzer": {
+        "rebuilt_arabic":{
+          "type":"custom",
+          "tokenizer":"standard",
+          "char_filter":["html_strip"],
+          "filter":[
+            "standard",
+            "decimal_digit",
+            "arabic_stop",
+            "arabic_normalization",
+            "arabic_keywords",
+            "arabic_stemmer"]
+        }
+      },
+      "filter": {
+        "arabic_stop": {
+          "type":       "stop",
+          "stopwords":  "_arabic_" 
+        },
+        "arabic_keywords": {
+          "type":       "keyword_marker",
+          "keywords":   ["مثال"] 
+        },
+        "arabic_stemmer": {
+          "type":       "stemmer",
+          "language":   "arabic"
+        }
+      }
+    }
+  }
+}
+
+
+POST arabic_example/_analyze
+{
+  "analyzer": "rebuilt_arabic",
+  "text": "ذهب أحمد مع خالد الى المدرسة ليلا <bold>مثلا</bold>"
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
